@@ -1,7 +1,5 @@
 from general import *
-
-def heristicASTAR():
-    return 0
+from heuristic import *
 
 def astar(matrix, start, end, costMatrix):
     numRows = len(matrix)
@@ -30,6 +28,6 @@ def astar(matrix, start, end, costMatrix):
             tmpCost = cost[vx][vy] + costMatrix[x][y]
             if (check(matrix, x,y) == True and isClosed[x][y]==False):
                 cost[x][y] = tmpCost
-                h = cost[vx][vy] + heristicASTAR()
+                h = cost[vx][vy] + h1((x,y),end)
                 queue.append((h,x,y))
     return MAX,[]
