@@ -58,7 +58,7 @@ with open('maze_map2.txt', 'w') as outfile:
 with open('maze_map_DFS.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxx\n')
-    outfile.write('x G      x\n')
+    outfile.write('x S      x\n')
     outfile.write('x   xx   x\n')
     outfile.write('x   xx   x\n')
     outfile.write('x x      x\n')
