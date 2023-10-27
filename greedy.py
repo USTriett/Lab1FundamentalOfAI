@@ -1,7 +1,5 @@
 from general import *
-
-def heuristic(matrix, start, end, x, y):
-    return abs(x-end[0]) + abs(y-end[1])
+from heuristic import *
 
 def greedy(matrix, start, end, costMatrix):
     numRows = len(matrix)
@@ -11,7 +9,7 @@ def greedy(matrix, start, end, costMatrix):
     cost = 0
 
     isVisited = [[False]* numCols for _ in range (numRows)]
-    isVisited [start[0]] [start[1]] = True;
+    isVisited[start[0]][start[1]] = True
 
     while (route[-1] != end):
         v = route[-1]
@@ -23,7 +21,7 @@ def greedy(matrix, start, end, costMatrix):
             x = v[0] + adjX[i]
             y = v[1] + adjY[i]
             if (check(matrix,x,y) == True and isVisited[x][y] == False):
-                h = heuristic(matrix,start,end,x,y)
+                h = h1((x,y), end)
                 if (h < minn):
                     minn = h
                     xx = x
