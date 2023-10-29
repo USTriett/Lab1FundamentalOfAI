@@ -35,26 +35,6 @@ with open('input/level_1/input2.txt', 'w') as outfile:
     outfile.write('x   x       x        xx        \n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-
-
-with open('input/maze_map2.txt', 'w') as outfile:
-    outfile.write('0\n')
-    outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
-    outfile.write('x S                        x  x\n')
-    outfile.write('x xxxxxxxxxxxxxxxxxxxxxxxxxx  x\n')
-    outfile.write('x x                           x\n')
-    outfile.write('x x xxxxxxxxxxxxxxxxxxxxxxxx  x\n')
-    outfile.write('x x x                Tx    x  x\n')
-    outfile.write('x x x xxxxxxxxxxxxxxxxx x  x  x\n')
-    outfile.write('x x x                   x  x  x\n')
-    outfile.write('x x xxxxxxxxxxxxxxxxxxxxx  x  x\n')
-    outfile.write('x x                        x  x\n')
-    outfile.write('x xxxxxxxxxxxxxxxxxxxxxxxxxx  x\n')
-    outfile.write('x                             x\n')
-    outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
-    outfile.write('xT                             \n')
-    outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-
 with open('input/level_1/input4.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxx\n')

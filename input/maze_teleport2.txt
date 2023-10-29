@@ -1,0 +1,16 @@
+2
+1 6 7 23
+11 2 3 30
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x S   T                       x
+x xxxxxxxxxxxxxxxxxxxxxxxxxx  x
+x x                          Tx
+x x xxxxxxxxxxxxxxxxxxxxxxxx  x
+x x x                      x  x
+x x x xxxxxxxxx xxxxxxxxx  x  x
+x x x                  Tx  x   
+x x xxxxxxxxxxxxxxxxxxxxx  x  x
+x x                        x  x
+x xxxxxxxxxxxxxxxxxxxxxxxxxx  x
+x T                           x
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
