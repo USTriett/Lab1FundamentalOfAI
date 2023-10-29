@@ -1,4 +1,4 @@
-with open('maze_destination1.txt', 'w') as outfile:
+with open('input/leveL_3/maze_destination1.txt', 'w') as outfile:
     outfile.write('5\n')
     outfile.write('1 28 0\n')
     outfile.write('3 3 0\n')
@@ -20,7 +20,7 @@ with open('maze_destination1.txt', 'w') as outfile:
     outfile.write('x+                           + \n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
 
-with open('maze_destination2.txt', 'w') as outfile:
+with open('input/leveL_3/maze_destination2.txt', 'w') as outfile:
     outfile.write('10\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S           +              x\n');
@@ -39,7 +39,8 @@ with open('maze_destination2.txt', 'w') as outfile:
     outfile.write('x +                         +x\n');
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
 
-with open('maze_destination3.txt', 'w') as outfile:
+with open('input/leveL_3/maze_destination3.txt', 'w') as outfile:
+    outfile.write("25\n");
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S +      x       x    x     x        x\n');
     outfile.write('x           x  +  x      x + x         x\n');
@@ -60,5 +61,5 @@ with open('maze_destination3.txt', 'w') as outfile:
     outfile.write('x +  x     xx  x  + x  + xxx    + x +  x\n');
     outfile.write('x    x     x x      x    x  +     x    x\n');
     outfile.write('x    x +   x  xx   xxx   xxxxx    x    x\n');
-    outfile.write('x                                      x\n');
+    outfile.write('x                                       \n');
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
