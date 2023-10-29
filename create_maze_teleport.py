@@ -21,7 +21,7 @@ with open('input/advance/maze_teleport1.txt', 'w') as outfile:
 with open('input/advance/maze_teleport2.txt', 'w') as outfile:
     outfile.write('3\n')
     outfile.write('3 25 12 4\n')
-    outfile.write('10 10 7 29\n')
+    outfile.write('8 17 7 29\n')
     outfile.write('6 1 5 19\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S                          x\n');
@@ -42,7 +42,7 @@ with open('input/advance/maze_teleport2.txt', 'w') as outfile:
 
 # Đi xuống -> Teleport -> Qua trái -> Teleport -> Teleport
 with open('input/advance/maze_teleport3.txt', 'w') as outfile:
-    outfile.write('2\n')
+    outfile.write('3\n')
     outfile.write('4 1 7 23\n')
     outfile.write('9 3 6 30\n')
     outfile.write('7 18 9 3\n')
@@ -63,7 +63,7 @@ with open('input/advance/maze_teleport3.txt', 'w') as outfile:
 with open('input/advance/maze_teleport4.txt', 'w') as outfile:
     outfile.write('3\n')
     outfile.write('3 25 12 4\n')
-    outfile.write('10 10 7 29\n')
+    outfile.write('10 24 7 29\n')
     outfile.write('6 1 5 19\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S                          x\n');
