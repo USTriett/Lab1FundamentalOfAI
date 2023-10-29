@@ -6,8 +6,8 @@ def findDestination(file_path):
   try:
     with open(file_path, 'r') as file:
         lines = file.readlines()
-        for y, line in enumerate(lines):
-            for x, char in enumerate(line):
+        for x, line in enumerate(lines):
+            for y, char in enumerate(line):
                 if char == '+':
                     plus_count += 1
                     plus_positions.append((x, y))
@@ -24,4 +24,5 @@ def findDestination(file_path):
   except Exception as e:
     print(f"An error occurred: {str(e)}")
 
-findDestination("/input/level_3/maze_destination2.txt")
+# findDestination("./input/level_3/maze_destination2.txt")
+findDestination("./input/level_3/maze_destination3.txt")
