@@ -96,7 +96,9 @@ def h(start, end, *args):
     if len(args) == 0:
         return h1((start, end))
     elif len(args) == 1:
-        # print(args[0])
+        # print(type(args[0]))
+        if args[0] is None:
+            return h1((start, end))
         if len(args[0]) == 0:
             return h1((start, end))
         if args[0][0] == 0:

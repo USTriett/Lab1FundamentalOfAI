@@ -19,13 +19,13 @@ def dfs(matrix, start, end, costMatrix, maze, *args):
     while stack:
         v = stack.pop()
         # print("pop ", v)
+        maze.update_cell([v[1], v[0]], Maze.Cell.FRONTIER)
 
         for i in range(numNeibour):
             x = v[0] + adjX[i]
             y = v[1] + adjY[i]
             if (check(matrix, x, y) is True) and (cost[x][y] == MAX):
                 stack.append((x, y))
-                maze.update_cell([y, x], Maze.Cell.FRONTIER)
                 cost[x][y] = cost[v[0]][v[1]] + costMatrix[x][y]
                 if [x, y] == end:
                     return trace(matrix, cost, costMatrix, start, end)

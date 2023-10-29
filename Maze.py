@@ -1,15 +1,15 @@
 import os
 from enum import Enum
+from timeit import default_timer as timer
 
 import numpy as np
 import pygame as pg
 import pygame.event
-from timeit import default_timer as timer
 
-import astar
 import general
 import heuristic
 import maze_data as md
+import teleport
 from pygame_recorder import ScreenRecorder
 
 # print(1)
@@ -26,6 +26,8 @@ class Cell(str, Enum):
     CURRENT = "C"
     FRONTIER = "F"
     PATH = "*"
+    TELE = "T"
+    CLOSED_GATE = 'CG'
 
 
 class Maze:
@@ -37,7 +39,10 @@ class Maze:
 
         self.color_map = {Cell.EMPTY: "White", Cell.PATH: "Yellow", Cell.GOAL: "Red", Cell.BLOCKED: "Black",
                           Cell.START: "Green",
-                          Cell.FRONTIER: "Purple"}
+                          Cell.FRONTIER: "Purple",
+                          Cell.TELE: "Orange",
+                          Cell.CLOSED_GATE: "Gray"
+                          }
         self.__main_screen = main_screen
         self.__screen = pg.Surface(size_screen)
         self.__screen.fill("White")
@@ -126,7 +131,6 @@ def main(level, alg_name, h=''):
     filenames = general.get_files(dirPath)
     for f in filenames:
         myMazeData.append(md.read_data(os.path.join(dirPath, f)))
-    pg.init()
     count = 1
     outDirPath = './output/level' + str(level) + '/input'
     for maze in myMazeData:
@@ -149,6 +153,53 @@ def main(level, alg_name, h=''):
         start_time = timer()
         cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, preSum)
         # print(route)
+        end_time = timer()
+        general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
+        count += 1
+        # print(count, end_time - start_time)
+        myMaze.trace_back(route)
+        for i in range(50):
+            recorder.capture_frame(screen)
+        pg.quit()
+        recorder.end_recording()
+
+
+def advanced_main(alg_name, h=''):
+    dirPath = './input/advance'
+    advanced_file_list = general.get_files(dirPath)
+    # print(len(advanced_file_list))
+    myMazeData = []
+    teleportData = []
+    for f in advanced_file_list:
+        x, y = teleport.read_file_teleport(dirPath + '/' + f)
+        # print(x, y)
+        teleportData.append(x)
+        myMazeData.append(y)
+    print(teleportData[0])
+    outDirPath = './output/advance'
+    count = 0
+    for maze in myMazeData:
+        path = record_change_output(outDirPath, alg_name, count + 1, h)
+        d = np.array(maze.get_data())
+        screen = pg.display.set_mode((1000, 500))
+        screen.fill("White")
+        myMaze = Maze((900, 450), d, screen)
+        myMaze.display()
+        pygame.display.flip()
+        costMatrix = general.creatCostMatrix(d, [])
+        print(costMatrix)
+        start_pos = general.find_start(d)
+        end_pos = maze.get_goal_pos()
+
+        preSum = None
+        if h == '2':
+            preSum = heuristic.calcPrefixSum(d)
+            # print(preSum)
+        # print(preSum)
+        start_time = timer()
+        cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, preSum,
+                                                       teleportData[count]
+                                                       )
         end_time = timer()
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1

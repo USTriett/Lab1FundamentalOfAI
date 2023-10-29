@@ -1,3 +1,5 @@
+
+
 G_MAX = 10 ** 8
 numNeibour = 4
 adjX = [-1, 0, 1, 0]
@@ -37,8 +39,8 @@ def find_start(matrix):
 
     for i in range(numRows):
         for j in range(numCols):
-            if (matrix[i][j] == 'S'):
-                return (i, j)
+            if matrix[i][j] == 'S':
+                return i, j
 
 
 def find_end(matrix):
@@ -46,16 +48,16 @@ def find_end(matrix):
     numCols = len(matrix[0])
 
     for i in range(numRows):
-        if (matrix[i][0] == ' '):
-            return (i, 0)
-        elif (matrix[i][numCols - 1] == ' '):
-            return (i, numCols - 1)
+        if matrix[i][0] != 'x':
+            return i, 0
+        elif matrix[i][numCols - 1] != 'x':
+            return i, numCols - 1
 
     for j in range(numCols):
-        if (matrix[0][j] == ' '):
-            return (0, j)
-        elif (matrix[numRows - 1][j] == ' '):
-            return (numRows - 1, j)
+        if matrix[0][j] != ' ':
+            return 0, j
+        elif matrix[numRows - 1][j] != 'x':
+            return numRows - 1, j
 
 
 def creatCostMatrix(matrix, bonus_points):
@@ -64,7 +66,8 @@ def creatCostMatrix(matrix, bonus_points):
         ' ': 1,
         'S': 0,
         '+': -1,
-        'G': 1
+        'G': 1,
+        'T': 1
         # '+' khong quan trong vi se update sau
     }
 
@@ -83,13 +86,13 @@ def creatCostMatrix(matrix, bonus_points):
 
 
 def isInMatrix(matrix, x, y):
-    if (x < 0):
+    if x < 0:
         return False
-    if (y < 0):
+    if y < 0:
         return False
-    if (x >= len(matrix)):
+    if x >= len(matrix):
         return False
-    if (y >= len(matrix[0])):
+    if y >= len(matrix[0]):
         return False
     return True
 
@@ -121,15 +124,15 @@ import bfs
 import dfs
 import greedy
 import ucs
-
+import teleport
 
 class ALGORITHM_NAME(str, Enum):
     BFS = 'bfs'
     DFS = 'dfs'
     UCS = 'ucs'
-    GREEDY = 'greedy'
-    ASTAR = 'astar'
-
+    GREEDY = 'greedy',
+    ASTAR = 'astar',
+    TELE = 'teleport'
 
 def get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, *args):
     # print(alg_name)
@@ -143,6 +146,8 @@ def get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, *args):
         return greedy.greedy(d, start_pos, end_pos, costMatrix, myMaze)
     elif alg_name == ALGORITHM_NAME.ASTAR:
         return astar.astar(d, start_pos, end_pos, costMatrix, myMaze, *args)
+    elif alg_name == ALGORITHM_NAME.TELE:
+        return teleport.teleportSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
     return None
 
 
