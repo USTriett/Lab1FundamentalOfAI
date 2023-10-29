@@ -1,0 +1,20 @@
+3
+3 25 12 4
+10 10 7 29
+6 1 5 19
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x S                          x
+x  xxxxxxxxxxxxxxxxxxxxxxxx  x
+x  x                     Tx  x
+x  x xxxxxxxxxxxxxxxxxxxxxx  x
+x  x               T         x
+xT xxxxxxxxxxxxxxxxxxxxxxxxx x
+x  x   x                    xT
+x  x x x x                  xx
+x  x x x xxxxxxxxxxxxxxxxxx  x
+x  x x   xT                  x
+x  x xxxxxxxxxxxxxxxxxxxxxxxxx
+x  xT                        x
+x  xxxxxxxxxxxxxxxxxxxxxxxx  x
+x                            x
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
