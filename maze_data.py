@@ -41,6 +41,7 @@ def read_data(file_name):
                 data.insert(len(data), lines)
             (i, j) = general.find_end(data)
             data[i][j] = 'G'
+            # print(i, j)
             goal_pos = [i, j]
     file.close()
     return MazeData(num_score, score_data, data, goal_pos)

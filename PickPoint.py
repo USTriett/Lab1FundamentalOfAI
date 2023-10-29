@@ -5,95 +5,104 @@ def calcDistance(matrix, start, costMatrix):
     numRows = len(matrix)
     numCols = len(matrix[0])
 
-    queue = [start]
+    queue = []
+    queue.append(start)
 
     cost = [[G_MAX] * numCols for _ in range(numRows)]
+    traceBFS = [[[-1, -1]] * numCols for _ in range(numRows)]
 
     if matrix[start[0]][start[1]] == 'x':
-        return cost
+        return cost, traceBFS
 
+    traceBFS[start[0]][start[1]] = list(start)
     cost[start[0]][start[1]] = 0
 
-    while queue:
+    while (queue):
         v = queue[0]
         queue.remove(queue[0])
 
         for i in range(numNeibour):
             x = v[0] + adjX[i]
             y = v[1] + adjY[i]
-            if check(matrix, x, y) is True and cost[x][y] == G_MAX:
+            if (check(matrix, x, y) == True and cost[x][y] == G_MAX):
                 cost[x][y] = cost[v[0]][v[1]] + costMatrix[x][y]
                 queue.append((x, y))
+                traceBFS[x][y] = list(v)
 
-    return cost
-
-
-def getBit(mask, _id):
-    return (mask >> _id) & 1
+    return cost, traceBFS
 
 
-def turnOnBit(mask, _id):
-    return mask | (1 << _id)
+def getBit(mask, id):
+    return (mask >> id) & 1
 
 
-def tracePickpoint(matrix, start, end, distance, cost, traceDp, pickpoints):
+def turnOnBit(mask, id):
+    return (mask | (1 << id))
+
+
+def tracePickpoint(start, end, cost, traceDp, pickpoints, traceBFS):
     num_pickpoints = len(pickpoints)
 
     mask_max = 1 << num_pickpoints
 
-    _id = 0
+    id = 0
     mask = (mask_max - 1)
     minCost = cost[0]
     for i in range(1, num_pickpoints):
         if cost[i] < minCost:
-            _id = i
+            id = i
             minCost = cost[i]
 
     route = []
-    cur = end
-    pre = (pickpoints[_id][0], pickpoints[_id][1])
+    cur = list(end)
+    pre = [pickpoints[id][0], pickpoints[id][1]]
     cont = True
 
-    while cur != start:
+    while cur[0] != start[0] or cur[1] != start[1]:
+        # print(cur, pre)
         px = pre[0]
         py = pre[1]
-        while cur != pre:
+        while cur[0] != pre[0] or cur[1] != pre[1]:
             route.append(cur)
             cx = cur[0]
             cy = cur[1]
 
-            ok = False
-            for i in range(numNeibour):
-                x = cx - adjX[i]
-                y = cy - adjY[i]
-                if (check(matrix, x, y) is True and distance[px][py][cx][cy] == distance[px][py][x][y] +
-                        distance[x][y][cx][cy]):
-                    cur = (x, y)
-                    ok = True
-                    break
-
-            if ok is False:
-                return G_MAX, []
+            tmp = traceBFS[px][py][cx][cy]
+            if tmp[0] == -1 and tmp[1] == -1:
+                return MAX, []
+            cur = tmp
 
         if cont is False:
             break
-        if traceDp[mask][_id] == _id:
-            pre = start
+        if traceDp[mask][id] == id:
+            pre = list(start)
             cont = False
         else:
-            pre = (pickpoints[traceDp[mask][_id]][0], pickpoints[traceDp[mask][_id]][1])
-            tmpid = traceDp[mask][_id]
-            mask = mask ^ (1 << _id)
-            _id = tmpid
+            pre = [pickpoints[traceDp[mask][id]][0], pickpoints[traceDp[mask][id]][1]]
+            tmpid = traceDp[mask][id]
+            mask = mask ^ (1 << id)
+            id = tmpid
 
-    route.append(start)
-
+    route.append(list(start))
+    route.reverse()
     return minCost, route
 
 
+def toBin(x):
+    s = ""
+    while x > 0:
+        if x % 2 == 0:
+            s = '0' + s
+        else:
+            s = '1' + s
+        x //= 2
+    return s
+
+
 def pickpointSearch(matrix, start, end, costMatrix, maze, *args):
-    pickpoints = args[0]
-    print(pickpoints)
+
+    pickpoints = args[0][0]
+    # print(pickpoints)
     num_pickpoints = len(pickpoints)
 
     numRows = len(matrix)
@@ -102,11 +111,14 @@ def pickpointSearch(matrix, start, end, costMatrix, maze, *args):
     mask_max = (1 << num_pickpoints)
 
     distance = [[[]] * numCols for _ in range(numRows)]
+    traceBFS = [[[]] * numCols for _ in range(numRows)]
 
     for i in range(numRows):
         for j in range(numCols):
-            tmp_dist = calcDistance(matrix, (i, j), costMatrix)
+            tmp_dist, tmp_trace = calcDistance(matrix, (i, j), costMatrix)
+
             distance[i][j] = tmp_dist
+            traceBFS[i][j] = tmp_trace
 
     dp = [[G_MAX] * num_pickpoints for _ in range(mask_max)]
     traceDp = [[-1] * num_pickpoints for _ in range(mask_max)]
@@ -134,6 +146,7 @@ def pickpointSearch(matrix, start, end, costMatrix, maze, *args):
                         if c < dp[newmask][newlast]:
                             dp[newmask][newlast] = c
                             traceDp[newmask][newlast] = last
+                            # print(toBin(mask), " -> ", toBin(newmask), " - ", c, " - ", newlast)
 
     cost = []
     for i in range(num_pickpoints):
@@ -143,19 +156,7 @@ def pickpointSearch(matrix, start, end, costMatrix, maze, *args):
         y2 = end[1]
         cost.append(dp[mask_max - 1][i] + distance[x1][y1][x2][y2])
 
-    return tracePickpoint(matrix, start, end, distance, cost, traceDp, pickpoints)
+    return tracePickpoint(start, end, cost, traceDp, pickpoints, traceBFS)
 
 
-# def main():
-#     pickpoints, matrix = read_file("pickpoint.txt")
-#     costMatrix = creatCostMatrix(matrix, pickpoints)
-#     start = find_start(matrix)
-#     end = find_end(matrix)
-#
-#     cost, route = pickpointSearch(matrix, start, end, costMatrix, pickpoints)
-#
-#     print(cost)
-#     print(route)
-#
-#
-# main()
+

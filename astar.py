@@ -19,13 +19,13 @@ def astar(matrix, start, end, costMatrix, maze, *args):
 
     cost = [[MAX] * numCols for _ in range(numRows)]
     cost[start[0]][start[1]] = 0
-
     while queue:
         # print("priQueue: ", queue)
         # queue.sort()
         # c,vx,vy = queue[0]
         # queue.remove(queue[0])
         c, vx, vy = heapq.heappop(queue)
+        # print(vx, vy)
         if isClosed[vx][vy] is True:
             continue
 
@@ -34,7 +34,7 @@ def astar(matrix, start, end, costMatrix, maze, *args):
         for i in range(numNeibour):
             x = vx + adjX[i]
             y = vy + adjY[i]
-
+            # print(x, y)
             if check(matrix, x, y) is True and isClosed[x][y] is False:
                 tmpCost = cost[vx][vy] + costMatrix[x][y]
 
@@ -45,9 +45,9 @@ def astar(matrix, start, end, costMatrix, maze, *args):
                 # queue.append((h,x,y))
                 heapq.heappush(queue, (f, x, y))
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
-                # print(queue)
-                # print(h, x, y)
+
                 if [x, y] == end:
+                    # print('end')
                     return trace(matrix, cost, costMatrix, start, end)
 
     return MAX, []

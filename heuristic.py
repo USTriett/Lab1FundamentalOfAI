@@ -3,9 +3,12 @@ from general import isInMatrix
 
 
 def h1(arg):
+    # print('h1 call')
     cur = arg[0]
     end = arg[1]
-    # matrix = arg[2]
+    # print(end)
+    matrix = arg[2]
+    # print(matrix)
     # Mahatan
     dx = abs(end[0] - cur[0])
     dy = abs(end[1] - cur[1])
@@ -39,6 +42,7 @@ def calcInRect(prefixSum, left, right, top, bottom):
 
 
 def h2(args):
+    # print('h2 call')
     cur = args[0]
     end = args[1]
     prefixSum = args[2][1]
@@ -55,7 +59,7 @@ def h2(args):
     c = calcInRect(prefixSum, left, right, top, bottom)
     # print(left, right, top, bottom, c)
     # Mahatan + so vat can trong HCN (cur, end)
-    return h1((cur, end)) + c
+    return h1((cur, end, matrix)) + c
 
 
 # Heuristic 3: Heuristic 1 + tinh so vat can trong tam giac vuong can \
@@ -146,17 +150,14 @@ def h(start, end, *args):
     if len(args) == 0:
         return h1((start, end))
     elif len(args) == 1:
-        print(len(args[0]))
+        # print(len(args[0]))
         if len(args[0]) == 3:
             return h4((start, end, args[0][0]))
-        # print(args[0])
-        if len(args[0]) == 0:
-            return h1((start, end))
-        if args[0][0] is None:
-            return h1((start, end))
-        if args[0][0] == 0:
-            return h1((start, end))
-        print(args[0][0])
+
+        if len(args[0][0]) == 1:
+            return h1((start, end, args[0][0]))
+        # print(args[0][0])
+        # print('h2 called')
         return h2((start, end, args[0][0]))
 
     elif len(args) == 3:

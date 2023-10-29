@@ -53,7 +53,7 @@ def find_end(matrix):
             return i, numCols - 1
 
     for j in range(numCols):
-        if matrix[0][j] != ' ':
+        if matrix[0][j] != 'x':
             return 0, j
         elif matrix[numRows - 1][j] != 'x':
             return numRows - 1, j
@@ -112,6 +112,7 @@ def trace(matrix, cost, costMatrix, start, end):
             if check(matrix, x, y) is True and cost[x][y] == cost[v[0]][v[1]] - costMatrix[v[0]][v[1]]:
                 route.append((x, y))
                 v = (x, y)
+                print(v)
                 break
     route.reverse()
 
