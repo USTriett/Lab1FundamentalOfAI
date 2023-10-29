@@ -1,14 +1,20 @@
-from idlelib.pyshell import eof
+import os
+from enum import Enum
 
+import numpy as np
 import pygame as pg
 import pygame.event
-from sys import exit
-import numpy as np
-from enum import Enum
-import maze_data as md
+from timeit import default_timer as timer
 
+import astar
+import general
+import heuristic
+import maze_data as md
+from pygame_recorder import ScreenRecorder
 
 # print(1)
+recorder = ScreenRecorder(1000, 500, 30)
+
 
 # init pygame
 class Cell(str, Enum):
@@ -27,9 +33,12 @@ class Maze:
     __data = None
     __attr = {}
 
-    def __init__(self, size_screen, data):
+    def __init__(self, size_screen, data, main_screen):
 
-        self.color_map = {Cell.EMPTY: "White", Cell.PATH: "Yellow", Cell.GOAL: "Red", Cell.BLOCKED: "Black", Cell.START: "Green"}
+        self.color_map = {Cell.EMPTY: "White", Cell.PATH: "Yellow", Cell.GOAL: "Red", Cell.BLOCKED: "Black",
+                          Cell.START: "Green",
+                          Cell.FRONTIER: "Purple"}
+        self.__main_screen = main_screen
         self.__screen = pg.Surface(size_screen)
         self.__screen.fill("White")
         self.__data = data.copy()
@@ -64,64 +73,88 @@ class Maze:
         #     pos[0] += self.__width_rec
 
     def __color_pos__(self, row, col, rect_type):
+
         pg.draw.rect(self.__screen, self.color_map[rect_type],
                      (row * self.__width_rec, col * self.__width_rec, self.__width_rec, self.__width_rec))
 
-    def update_cell(self, pos):
+    def update_cell(self, pos, _type):
         # print(self.__data[pos[0]][pos[1]])
-        self.__color_pos__(pos[0], pos[1], self.color_map[self.__data[pos[0]][pos[1]]])
-
-        return self.__data[pos[0]][pos[1]]
+        self.__color_pos__(pos[0], pos[1], _type)
+        self.display()
+        # pygame.time.wait(50)
 
     def trace_back(self, pos):
-        cost = 0
         for [i, j] in pos:
-            cost += self.update_cell([i, j])
-        return cost
+            self.update_cell([j, i], Cell.PATH)
+            self.display()
+            # pygame.time.wait(50)
 
-    def display(self, main_screen):
-        main_screen.blit(self.__screen, (0, 0))
+    def display(self):
+        self.__main_screen.blit(self.__screen, (0, 0))
+        pygame.display.flip()
+        recorder.capture_frame(self.__main_screen)
 
     def generate_maze(self, file_name):
         pass
 
 
-if __name__ == "__main__":
-    # print(1)
-    myMazeData = md.read_data("maze_map.txt")
-    d = np.array(myMazeData.get_data())
-    # print(d[1])
-    pg.init()
-    screen = pg.display.set_mode((1000, 500))
-    screen.fill("White")
-    myMaze = Maze((900, 450), d)
-    myMaze.display(screen)
-    pygame.display.flip()
-    running = True
-    while running:
-        # m.display()
-        pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-    pygame.quit()
-
-
-# pg.init()
-# main_screen = pg.display.set_mode((800, 400))
-# main_screen.fill("White")
-# running = True
-#
-# m = Maze((600, 300), d)
-# m.update_cell([2, 2])
-#
-# pygame.display.flip()
-# while running:
-#     m.display()
+# def demoAlg(_maze):
+#     d = np.array(_maze.get_data())
+#     screen = pg.display.set_mode((1000, 500))
+#     screen.fill("White")
+#     myMaze = Maze((900, 450), d, screen)
+#     myMaze.display()
 #     pygame.display.flip()
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             running = False
-#
-# pygame.quit()
+#     costMatrix = general.creatCostMatrix(d, [])
+#     start_pos = general.find_start(d)
+#     end_pos = _maze.get_goal_pos()
+#     return d, start_pos, end_pos, costMatrix, myMaze
+
+def record_change_output(dest, alg_name, num_of_input, heu=''):
+    heuAlg = ''
+    if heu != '':
+        heuAlg = '_heuristic_' + heu
+    fileout = '/' + alg_name + heuAlg
+    os.makedirs(dest + str(num_of_input) + '/' + alg_name, exist_ok=True)
+    recorder.change_output_file(dest + str(num_of_input) + '/' + alg_name + fileout + '.mp4')
+    return dest + str(num_of_input) + '/' + alg_name + fileout
+
+
+def main(level, alg_name, h=''):
+    dirPath = "./input/level_" + str(level)
+    myMazeData = []
+    filenames = general.get_files(dirPath)
+    for f in filenames:
+        myMazeData.append(md.read_data(os.path.join(dirPath, f)))
+    pg.init()
+    count = 1
+    outDirPath = './output/level' + str(level) + '/input'
+    for maze in myMazeData:
+        path = record_change_output(outDirPath, alg_name, count, h)
+
+        d = np.array(maze.get_data())
+        screen = pg.display.set_mode((1000, 500))
+        screen.fill("White")
+        myMaze = Maze((900, 450), d, screen)
+        myMaze.display()
+        pygame.display.flip()
+        costMatrix = general.creatCostMatrix(d, [])
+        start_pos = general.find_start(d)
+        end_pos = maze.get_goal_pos()
+        preSum = 0
+        if h == '2':
+            preSum = heuristic.calcPrefixSum(d)
+            # print(preSum)
+        # print(preSum)
+        start_time = timer()
+        cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, preSum)
+        # print(route)
+        end_time = timer()
+        general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
+        count += 1
+        # print(count, end_time - start_time)
+        myMaze.trace_back(route)
+        for i in range(50):
+            recorder.capture_frame(screen)
+        pg.quit()
+        recorder.end_recording()

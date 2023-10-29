@@ -1,11 +1,16 @@
 import general
 
+
 class MazeData:
-    def __init__(self, num_score, score_data, data):
+
+    def __init__(self, num_score, score_data, data, goal_pos):
         self.__num_score = num_score
         self.__score_data = score_data.copy()
         self.__data = data.copy()
+        self.__goal_pos = goal_pos
 
+    def get_goal_pos(self):
+        return self.__goal_pos
     def get_data(self):
         return self.__data
 
@@ -32,5 +37,6 @@ def read_data(file_name):
                 data.insert(len(data), lines)
             (i, j) = general.find_end(data)
             data[i][j] = 'G'
+            goal_pos = [i, j]
     file.close()
-    return MazeData(num_score, score_data, data)
+    return MazeData(num_score, score_data, data, goal_pos)

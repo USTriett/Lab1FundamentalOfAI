@@ -1,4 +1,4 @@
-with open('maze_map0.txt', 'w') as outfile:
+with open('input/maze_map0.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
     outfile.write('x S        xxx   x            x\n')
@@ -17,7 +17,7 @@ with open('maze_map0.txt', 'w') as outfile:
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
 
-with open('maze_map1.txt', 'w') as outfile:
+with open('input/level_1/input2.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
     outfile.write('x S        xxx   x            x\n')
@@ -37,7 +37,7 @@ with open('maze_map1.txt', 'w') as outfile:
 
 
 
-with open('maze_map2.txt', 'w') as outfile:
+with open('input/maze_map2.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
     outfile.write('x S                        x  x\n')
@@ -55,7 +55,7 @@ with open('maze_map2.txt', 'w') as outfile:
     outfile.write('xT                             \n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-with open('maze_map_DFS.txt', 'w') as outfile:
+with open('input/level_1/input4.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxx\n')
     outfile.write('x S      x\n')
@@ -68,7 +68,7 @@ with open('maze_map_DFS.txt', 'w') as outfile:
     outfile.write('x        x\n')
     outfile.write('xxxxxxxx x\n')
 
-with open('maze_map_BFS.txt', 'w') as outfile:
+with open('input/level_1/input3.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxx\n')
     outfile.write('x     xx  \n')
@@ -81,7 +81,7 @@ with open('maze_map_BFS.txt', 'w') as outfile:
     outfile.write('x        x\n')
     outfile.write('xxxxxxxxxx\n')
 
-with open('maze_map_Greed.txt', 'w') as outfile:
+with open('input/level_1/input5.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxx\n')
     outfile.write('x     xx  \n')
