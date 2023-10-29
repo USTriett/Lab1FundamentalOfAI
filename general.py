@@ -1,5 +1,4 @@
 
-
 G_MAX = 10 ** 8
 numNeibour = 4
 adjX = [-1, 0, 1, 0]
@@ -125,6 +124,9 @@ import dfs
 import greedy
 import ucs
 import teleport
+import PickPoint
+import bonusSearch
+
 
 class ALGORITHM_NAME(str, Enum):
     BFS = 'bfs'
@@ -132,7 +134,10 @@ class ALGORITHM_NAME(str, Enum):
     UCS = 'ucs'
     GREEDY = 'greedy',
     ASTAR = 'astar',
-    TELE = 'teleport'
+    TELE = 'teleport',
+    PICKUP = 'pick',
+    BONUS = 'bonus'
+
 
 def get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, *args):
     # print(alg_name)
@@ -148,8 +153,11 @@ def get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, *args):
         return astar.astar(d, start_pos, end_pos, costMatrix, myMaze, *args)
     elif alg_name == ALGORITHM_NAME.TELE:
         return teleport.teleportSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
+    elif alg_name == ALGORITHM_NAME.PICKUP:
+        return PickPoint.pickpointSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
+    elif alg_name == ALGORITHM_NAME.BONUS:
+        return bonusSearch.bonusSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
     return None
-
 
 
 def get_all_search_algorithms():

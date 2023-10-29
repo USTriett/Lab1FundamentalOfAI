@@ -78,7 +78,7 @@ def traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end):
 def teleportSearch(matrix, start, end, costMatrix, maze, *args):
     numRows = len(matrix)
     numCols = len(matrix[0])
-    teleports = args[1]
+    teleports = args[0][1]
     cntMatrix = [[0] * numCols for _ in range(numRows)]
 
     queue = []
@@ -116,7 +116,7 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
                     return traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end)
 
         teleportTo = findToTeleports(vx, vy, teleports)
-        print(teleportTo)
+        # print(teleportTo)
         for x, y in teleportTo:
             if isClosed[x][y] is False:
                 cost[x][y] = cost[vx][vy]

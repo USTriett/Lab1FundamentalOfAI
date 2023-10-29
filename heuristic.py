@@ -1,9 +1,15 @@
 # Heuristic 1: dung khoang cach Mahatan giua diem dang xet va dich
+from general import isInMatrix
+
+
 def h1(arg):
     cur = arg[0]
     end = arg[1]
+    # matrix = arg[2]
     # Mahatan
-    return abs(cur[0] - end[0]) + abs(cur[1] - end[1])
+    dx = abs(end[0] - cur[0])
+    dy = abs(end[1] - cur[1])
+    return dx + dy
 
 
 # Heuristic 2: Heuristic 1 + tinh so vat can trong HCN nho nhat chua diem dang xet va dich
@@ -27,14 +33,17 @@ def calcInRect(prefixSum, left, right, top, bottom):
     top = top + 1
     bottom = bottom + 1
     # print(top, bottom, left,  right)
-    return prefixSum[bottom][right] - prefixSum[top-1][right] - prefixSum[bottom][left - 1] + prefixSum[top - 1][left - 1]
+    return prefixSum[bottom][right] - prefixSum[top - 1][right] - prefixSum[bottom][left - 1] + prefixSum[top - 1][
+        left - 1]
     # return prefixSum[right][bottom] - prefixSum[right][top - 1] - prefixSum[left - 1][bottom] + prefixSum[left - 1][top - 1]
 
 
 def h2(args):
     cur = args[0]
     end = args[1]
-    prefixSum = args[2][0]
+    prefixSum = args[2][1]
+    # print(prefixSum)
+    matrix = args[2][0]
 
     # xac dinh cac canh cua HCN
     top = min(cur[0], end[0])
@@ -92,18 +101,64 @@ def h3(args):
     return h1((cur, end)) + cnt
 
 
+# Heuristic 4:
+# manhattan scale ve 1
+# scale tong 8 o xung quanh ve 1
+def scaleManhattan(cur, end, numRows, numCols):
+    dx = abs(end[0] - cur[0])
+    dy = abs(end[1] - cur[1])
+
+    return 0.5 * dx / (numRows - 1) + 0.5 * dy / (numCols - 1)
+
+
+def scaleSurround(cur, matrix):
+    surX = [1, 1, 1, -1, -1, -1, 0, 0]
+    surY = [1, 0, -1, -1, 0, 1, 1, -1]
+    _sum = 0
+    numSur = len(surX)
+    for i in range(numSur):
+        x = cur[0] + surX[i]
+        y = cur[1] + surY[i]
+        if isInMatrix(matrix, x, y) is True:
+            if matrix[x][y] == 'x':
+                if abs(surX[i]) + abs(surY[i]) == 1:
+                    _sum += 3
+                else:
+                    _sum += 1
+
+    return float(_sum / 16)
+
+
+def h4(args):
+    cur = args[0]
+    end = args[1]
+    matrix = args[2]
+
+    print(cur)
+    scaleM = scaleManhattan(cur, end, len(matrix), len(matrix[0]))
+    scaleSur = scaleSurround(cur, matrix)
+
+    print(scaleM, scaleSur, scaleM + scaleSur)
+    return scaleM + scaleSur
+
+
 def h(start, end, *args):
     if len(args) == 0:
         return h1((start, end))
     elif len(args) == 1:
-        # print(type(args[0]))
-        if args[0] is None:
-            return h1((start, end))
+        print(len(args[0]))
+        if len(args[0]) == 3:
+            return h4((start, end, args[0][0]))
+        # print(args[0])
         if len(args[0]) == 0:
+            return h1((start, end))
+        if args[0][0] is None:
             return h1((start, end))
         if args[0][0] == 0:
             return h1((start, end))
-        return h2((start, end, args[0]))
+        print(args[0][0])
+        return h2((start, end, args[0][0]))
+
     elif len(args) == 3:
         return h3((start, end, args[0], args[1]))
     return 0

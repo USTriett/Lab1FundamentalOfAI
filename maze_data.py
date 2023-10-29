@@ -11,20 +11,24 @@ class MazeData:
 
     def get_goal_pos(self):
         return self.__goal_pos
+
     def get_data(self):
         return self.__data
+
+    def get_score_data(self):
+        return self.__score_data
 
 
 def read_data(file_name):
     with open(file_name, 'r') as file:
         if file.readable():
-            num_score = file.readline(2)
-            # print(num_score)
+            num_score = file.readline()
+            # print('num score ', num_score)
             score_data = []
             for i in range(int(num_score)):
-                tup = file.readline().split(' ')
-                for j in tup:
-                    score_data.insert(len(score_data), int(j))
+                tup = tuple(file.readline()[0:-1].split(' '))
+                integer_tuple = tuple(map(int, tup))
+                score_data.insert(len(score_data), integer_tuple)
             # print(score_data)
             data = []
             while True:

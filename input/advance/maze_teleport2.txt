@@ -1,6 +1,6 @@
 3
 3 25 12 4
-10 10 7 29
+8 17 7 29
 6 1 5 19
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x S                          x

@@ -28,6 +28,7 @@ class Cell(str, Enum):
     PATH = "*"
     TELE = "T"
     CLOSED_GATE = 'CG'
+    SCORE = '+'
 
 
 class Maze:
@@ -41,12 +42,14 @@ class Maze:
                           Cell.START: "Green",
                           Cell.FRONTIER: "Purple",
                           Cell.TELE: "Orange",
-                          Cell.CLOSED_GATE: "Gray"
+                          Cell.CLOSED_GATE: "Gray",
+                          Cell.SCORE: "White"
                           }
         self.__main_screen = main_screen
         self.__screen = pg.Surface(size_screen)
         self.__screen.fill("White")
         self.__data = data.copy()
+        print(data)
         shape = data.shape
         print(shape)
         self.__width_rec = self.__screen.get_width() // shape[1]
@@ -81,10 +84,19 @@ class Maze:
 
         pg.draw.rect(self.__screen, self.color_map[rect_type],
                      (row * self.__width_rec, col * self.__width_rec, self.__width_rec, self.__width_rec))
+        if self.__data[col][row] == Cell.SCORE:
+            self.__write_text__(row, col)
+
+    def __write_text__(self, x, y):
+        font = pygame.font.Font(None, int(1.5 * self.__width_rec))
+        text = font.render('+', True, "Black")
+        self.__screen.blit(text,
+                           (x * self.__width_rec + self.__width_rec // 7, y * self.__width_rec - self.__width_rec // 7))
 
     def update_cell(self, pos, _type):
         # print(self.__data[pos[0]][pos[1]])
         self.__color_pos__(pos[0], pos[1], _type)
+
         self.display()
         # pygame.time.wait(50)
 
@@ -145,14 +157,21 @@ def main(level, alg_name, h=''):
         costMatrix = general.creatCostMatrix(d, [])
         start_pos = general.find_start(d)
         end_pos = maze.get_goal_pos()
-        preSum = 0
-        if h == '2':
-            preSum = heuristic.calcPrefixSum(d)
-            # print(preSum)
-        # print(preSum)
+        params = [maze.get_score_data(), heuristic.calcPrefixSum(d)]
+
+        # if level >= 2:
+
+        # print(params)
+
         start_time = timer()
-        cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, preSum)
-        # print(route)
+        cost, route = (None, None)
+
+        if h == '4':
+            cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h, params
+                                                )
+        else:
+            cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, params
+                                                )
         end_time = timer()
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1
@@ -175,8 +194,8 @@ def advanced_main(alg_name, h=''):
         # print(x, y)
         teleportData.append(x)
         myMazeData.append(y)
-    print(teleportData[0])
-    outDirPath = './output/advance'
+    # print(teleportData[0])
+    outDirPath = './output/advance/advance'
     count = 0
     for maze in myMazeData:
         path = record_change_output(outDirPath, alg_name, count + 1, h)
@@ -187,7 +206,7 @@ def advanced_main(alg_name, h=''):
         myMaze.display()
         pygame.display.flip()
         costMatrix = general.creatCostMatrix(d, [])
-        print(costMatrix)
+        # print(costMatrix)
         start_pos = general.find_start(d)
         end_pos = maze.get_goal_pos()
 
@@ -197,9 +216,18 @@ def advanced_main(alg_name, h=''):
             # print(preSum)
         # print(preSum)
         start_time = timer()
-        cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, preSum,
-                                                       teleportData[count]
-                                                       )
+        cntMatrix, cost, route = (None, None, None)
+        if h == '4':
+            cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (d,
+                                                                                                                 teleportData[
+                                                                                                                     count],
+                                                                                                                 h),
+                                                           )
+        else:
+            cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (preSum,
+                                                                                                                 teleportData[
+                                                                                                                     count])
+                                                           )
         end_time = timer()
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1

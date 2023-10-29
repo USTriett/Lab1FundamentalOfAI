@@ -28,8 +28,9 @@ def ucs(matrix, start, end, costMatrix, maze, *args):
         for i in range(numNeibour):
             x = v[0] + adjX[i]
             y = v[1] + adjY[i]
-            tmpCost = cost[v[0]][v[1]] + costMatrix[x][y]
             if check(matrix, x, y) is True and cost[x][y] == MAX:
+                tmpCost = cost[v[0]][v[1]] + costMatrix[x][y]
+
                 cost[x][y] = tmpCost
                 heapq.heappush(queue, (x, y))
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)

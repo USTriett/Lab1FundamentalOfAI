@@ -34,9 +34,10 @@ def astar(matrix, start, end, costMatrix, maze, *args):
         for i in range(numNeibour):
             x = vx + adjX[i]
             y = vy + adjY[i]
-            tmpCost = cost[vx][vy] + costMatrix[x][y]
 
             if check(matrix, x, y) is True and isClosed[x][y] is False:
+                tmpCost = cost[vx][vy] + costMatrix[x][y]
+
                 cost[x][y] = tmpCost
                 # print(args)
                 f = cost[vx][vy] + h([x, y], end, args)
