@@ -1,4 +1,4 @@
-with open('input/maze_destination1.txt', 'w') as outfile:
+with open('maze_destination1.txt', 'w') as outfile:
     outfile.write('5\n')
     outfile.write('1 28 0\n')
     outfile.write('3 3 0\n')
@@ -20,7 +20,7 @@ with open('input/maze_destination1.txt', 'w') as outfile:
     outfile.write('x+                           + \n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
 
-with open('input/maze_teleport2.txt', 'w') as outfile:
+with open('maze_destination2.txt', 'w') as outfile:
     outfile.write('10\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S           +              x\n');
@@ -39,25 +39,26 @@ with open('input/maze_teleport2.txt', 'w') as outfile:
     outfile.write('x +                         +x\n');
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
 
-with open('input/maze_teleport3.txt', 'w') as outfile:
-    outfile.write('10\n')
+with open('maze_destination3.txt', 'w') as outfile:
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
-    outfile.write('x S  x   x  x x   x   x    x           x\n');
-    outfile.write('x     x x    x    x x x                x\n');
-    outfile.write('x      x    x     x  xx                x\n');
+    outfile.write('x S +      x       x    x     x        x\n');
+    outfile.write('x           x  +  x      x + x         x\n');
+    outfile.write('x      +     x   x   +     x     +     x\n');
+    outfile.write('x             x x         x            x\n');
+    outfile.write('x              x         x             x\n');
+    outfile.write('x             +                        x\n');
+    outfile.write('x   +                             +    x\n');
+    outfile.write('x    xxxxx  x    x       x      xxxxx  x\n');
+    outfile.write('x    x + x  x +  x      x x       x +  x\n');
+    outfile.write('x    x x    xxxxxx     xx xx    + x    x\n');
+    outfile.write('x    x      x    x    x     x     x    x\n');
+    outfile.write('x    x   +  x  + x   x   +   x    x    x\n');
     outfile.write('x                                      x\n');
     outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('                                       x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
-    outfile.write('x                                      x\n');
+    outfile.write('x xxxxxxx  xxxxx   xxx   xxxxx xxxxxxx x\n');
+    outfile.write('x    x     x + x    x    x  +     x    x\n');
+    outfile.write('x +  x     xx  x  + x  + xxx    + x +  x\n');
+    outfile.write('x    x     x x      x    x  +     x    x\n');
+    outfile.write('x    x +   x  xx   xxx   xxxxx    x    x\n');
     outfile.write('x                                      x\n');
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
