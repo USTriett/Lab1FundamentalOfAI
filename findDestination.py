@@ -24,4 +24,4 @@ def findDestination(file_path):
   except Exception as e:
     print(f"An error occurred: {str(e)}")
 
-findDestination("maze_destination3.txt")
+findDestination("/input/level_3/maze_destination2.txt")
