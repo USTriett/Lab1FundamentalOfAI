@@ -4,7 +4,6 @@
 7 23 -20
 9 19 -5
 11 1 -10
-
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x S                          +x
 x xxxxxxxxxxxxxxxxxxxxxxxxxx  x

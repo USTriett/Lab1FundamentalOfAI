@@ -5,7 +5,6 @@ with open('input/leveL_2/maze_destination1.txt', 'w') as outfile:
     outfile.write('7 23 -20\n')
     outfile.write('9 19 -5\n')
     outfile.write('11 1 -10\n')
-    outfile.write('\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
     outfile.write('x S                          +x\n')
     outfile.write('x xxxxxxxxxxxxxxxxxxxxxxxxxx  x\n')
