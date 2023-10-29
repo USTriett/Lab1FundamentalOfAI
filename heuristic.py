@@ -153,7 +153,8 @@ def h(start, end, *args):
         # print(len(args[0]))
         if len(args[0]) == 3:
             return h4((start, end, args[0][0]))
-
+        if len(args[0]) == 0:
+            return h1((start, end, []))
         if len(args[0][0]) == 1:
             return h1((start, end, args[0][0]))
         # print(args[0][0])

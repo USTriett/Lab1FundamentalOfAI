@@ -11,7 +11,6 @@ import general
 import heuristic
 import maze_data as md
 import teleport
-from get_font import get_font
 from pygame_recorder import ScreenRecorder
 
 # print(1)
@@ -58,10 +57,7 @@ class Maze:
         self.__width_rec = self.__screen.get_width() // shape[1]
         height_rec = self.__screen.get_height() // shape[0]
         self.__width_rec = min(self.__width_rec, height_rec)
-        self.__font = get_font()
-
-        # self.__font = font
-        # print(self.__width_rec)
+        self.__font = general.get_font()
 
         pos = [0, 0]
         for r in data:
@@ -73,29 +69,19 @@ class Maze:
             pos[1] += 1
             pos[0] = 0
 
-        # pos[0] = 0
-        # pos[1] = 0
-        # for i in range(0, shape[0] + 1):
-        #     pg.draw.line(self.__screen, "Black", pos, ((shape[1]) * self.__width_rec, pos[1]))
-        #     # print(((shape[1]) * self.__width_rec, pos[1]))
-        #     pos[1] += self.__width_rec
-        #
-        # pos[1] = 0
-        # for i in range(0, shape[1] + 1):
-        #     pg.draw.line(self.__screen, "Black", pos, (pos[0], (shape[0]) * self.__width_rec))
-        #     pos[0] += self.__width_rec
-
     def __color_pos__(self, row, col, rect_type):
 
         pg.draw.rect(self.__screen, self.color_map[rect_type],
                      (row * self.__width_rec, col * self.__width_rec, self.__width_rec, self.__width_rec))
         if self.__data[col][row] == Cell.SCORE:
-            self.__write_text__(row, col)
+            self.__write_text__(row, col, '+', self.__width_rec)
+        if self.__data[col][row] == Cell.GOAL:
+            self.__write_text__(row, col, 'EXIT', self.__width_rec // 2)
 
-    def __write_text__(self, x, y):
-        text = self.__font.render('+', True, "Black")
+    def __write_text__(self, x, y, txt, size):
+        text = general.get_font(size).render(txt, True, "Black")
         self.__screen.blit(text,
-                           (x * self.__width_rec + self.__width_rec // 7, y * self.__width_rec - self.__width_rec // 7))
+                           (x * self.__width_rec + size // 7, y*self.__width_rec))
 
     def update_cell(self, pos, _type):
         # print(self.__data[pos[0]][pos[1]])
@@ -153,13 +139,14 @@ def main(level, alg_name, h=''):
     outDirPath = './output/level' + str(level) + '/input'
     for maze in myMazeData:
         path = record_change_output(outDirPath, alg_name, count, h)
-
         d = np.array(maze.get_data())
         screen = pg.display.set_mode((1000, 500))
         screen.fill("White")
         myMaze = Maze((900, 450), d, screen)
         myMaze.display()
         pygame.display.flip()
+        pygame.image.save(screen, outDirPath  + str(count) + '.png')
+
         costMatrix = general.creatCostMatrix(d, [])
         start_pos = general.find_start(d)
         end_pos = maze.get_goal_pos()
@@ -178,7 +165,7 @@ def main(level, alg_name, h=''):
             cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h, params
                                                 )
         elif h == '1':
-            # print('params[0]: ', [params[0]])
+            print('params[0]: ', [params[0]])
             cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, [params[0]]
                                                 )
 
@@ -220,6 +207,7 @@ def advanced_main(alg_name, h=''):
         myMaze = Maze((900, 450), d, screen)
         myMaze.display()
         pygame.display.flip()
+        pygame.image.save(screen, outDirPath + str(count) + '.png')
         costMatrix = general.creatCostMatrix(d, [])
         # print(costMatrix)
         start_pos = general.find_start(d)

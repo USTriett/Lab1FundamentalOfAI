@@ -1,3 +1,4 @@
+import pygame
 
 G_MAX = 10 ** 8
 numNeibour = 4
@@ -185,3 +186,8 @@ def write_output_txt(filename, matrix, time, cost, route):
                 f.write(str(t) + ', ')
             else:
                 f.write(str(tuple(t)))
+
+
+def get_font(size = 36):
+    pygame.font.init()
+    return pygame.font.Font(None, size)
