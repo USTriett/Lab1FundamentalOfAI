@@ -1,19 +1,8 @@
-5
-1 28 -5
-3 3 -50
-7 23 -20
-9 19 -5
-11 1 -10
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-x S                          +x
-x xxxxxxxxxxxxxxxxxxxxxxxxxx  x
-x x+                          x
-x x xxxxxxxxxxxxxxxxxxxxx xx  x
-x x x                      x  x
-x x x xxxxxxxxxxxxxxxxx x  x  x
-x x x                  +x  x  x
-x x xxxxxxxxxxxxxxxxxxxxx  x  x
-x x          x     +       x  x
-x xxxx xxxxxxxxxxxxxxx xxxxx  x
-x+                             
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+2
+1 1 -51 8 -100xxxxxxxxxx
+x+x   x +x
+x x x x  x
+x x x x  x
+xSx x x  x
+    x    x
+xxxxxxxxxx

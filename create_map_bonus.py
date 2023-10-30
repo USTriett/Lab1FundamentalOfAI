@@ -1,4 +1,4 @@
-with open('input/leveL_2/maze_destination2.txt', 'w') as outfile:
+with open('input/leveL_2/maze_destination1.txt', 'w') as outfile:
     outfile.write("2\n")
     outfile.write('1 1 -5')
     outfile.write('1 8 -100')
@@ -31,7 +31,7 @@ with open('input/leveL_2/maze_destination2.txt', 'w') as outfile:
     outfile.write('x+                             \n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
 
-with open('input/leveL_3/maze_destination3.txt', 'w') as outfile:
+with open('input/level_2/maze_destination3.txt', 'w') as outfile:
     outfile.write('10\n')
     outfile.write('1 14 2\n')
     outfile.write('3 12 -15\n')
@@ -43,7 +43,6 @@ with open('input/leveL_3/maze_destination3.txt', 'w') as outfile:
     outfile.write('11 23 -2\n')
     outfile.write('14 2 -10\n')
     outfile.write('14 28 -200\n')
-
     outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n');
     outfile.write('x S           +               \n');
     outfile.write('x   xxxxxxxxxxxxxxxxxxxxxxxx x\n');
