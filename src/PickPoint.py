@@ -156,7 +156,7 @@ def pickpointSearch(matrix, start, end, costMatrix, maze, *args):
         y2 = end[1]
         cost.append(dp[mask_max - 1][i] + distance[x1][y1][x2][y2])
 
-    return tracePickpoint(start, end, cost, traceDp, pickpoints, traceBFS)
+    return 0, tracePickpoint(start, end, cost, traceDp, pickpoints, traceBFS)
 
 
 

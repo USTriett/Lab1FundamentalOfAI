@@ -10,8 +10,9 @@ def bfs(matrix, start, end, costMatrix, maze, *args):
 
     numRows = len(matrix)
     numCols = len(matrix[0])
-
+    cell_open = 0
     queue = [start]
+    cell_open += 1
 
     cost = [[MAX] * numCols for _ in range(numRows)]
     cost[start[0]][start[1]] = 0
@@ -27,9 +28,9 @@ def bfs(matrix, start, end, costMatrix, maze, *args):
 
                 cost[x][y] = cost[v[0]][v[1]] + costMatrix[x][y]
                 queue.append((x, y))
-
+                cell_open += 1
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
 
                 if [x, y] == end:
-                    return trace(matrix, cost, costMatrix, start, end)
-    return MAX, []
+                    return cell_open, trace(matrix, cost, costMatrix, start, end)
+    return cell_open, (MAX, [])

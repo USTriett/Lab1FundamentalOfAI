@@ -173,4 +173,4 @@ def bonuspointSearch(matrix, start, end, costMatrix, maze, score_data):
         for mask in range(mask_max):
             cost[mask][last] = dp[mask][last] + distance[x1][y1][x2][y2]
 
-    return tracebonuspoint(start, end, cost, traceDp, bonuspoints, traceBFS)
+    return 0, tracebonuspoint(start, end, cost, traceDp, bonuspoints, traceBFS)

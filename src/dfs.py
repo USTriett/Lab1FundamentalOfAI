@@ -10,8 +10,9 @@ def dfs(matrix, start, end, costMatrix, maze, *args):
 
     numRows = len(matrix)
     numCols = len(matrix[0])
-
+    cell_open = 0
     stack = [start]
+    cell_open += 1
 
     cost = [[MAX] * numCols for _ in range(numRows)]
     cost[start[0]][start[1]] = 0
@@ -26,9 +27,11 @@ def dfs(matrix, start, end, costMatrix, maze, *args):
             y = v[1] + adjY[i]
             if (check(matrix, x, y) is True) and (cost[x][y] == MAX):
                 stack.append((x, y))
+                cell_open += 1
+
                 cost[x][y] = cost[v[0]][v[1]] + costMatrix[x][y]
                 if [x, y] == end:
-                    return trace(matrix, cost, costMatrix, start, end)
+                    return cell_open, trace(matrix, cost, costMatrix, start, end)
                 # print("add ", (x,y))
 
-    return MAX, []
+    return cell_open, (MAX, [])

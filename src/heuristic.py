@@ -57,9 +57,10 @@ def h2(args):
 
     # so vat can
     c = calcInRect(prefixSum, left, right, top, bottom)
+    a = abs
     # print(left, right, top, bottom, c)
     # Mahatan + so vat can trong HCN (cur, end)
-    return h1((cur, end, matrix)) + c
+    return h1((cur, end, matrix))
 
 
 # Heuristic 3: Heuristic 1 + tinh so vat can trong tam giac vuong can \

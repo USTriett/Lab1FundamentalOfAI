@@ -7,7 +7,7 @@ import pygame as pg
 
 import pygame.event
 
-from src import heuristic, general, teleport
+from src import heuristic, general, teleport, write_result
 import maze_data as md
 from pygame_recorder import ScreenRecorder
 
@@ -29,6 +29,7 @@ class Cell(str, Enum):
     SCORE = '+'
     NOPATH = 'no'
 
+
 class Maze:
     __screen = pg.Surface((600, 300))
     __data = None
@@ -44,7 +45,7 @@ class Maze:
                           Cell.TELE: "Orange",
                           Cell.CLOSED_GATE: "Gray",
                           Cell.SCORE: "White",
-                          Cell.NOPATH:"RED"
+                          Cell.NOPATH: "RED"
                           }
         self.__main_screen = main_screen
         self.__screen = pg.Surface(size_screen)
@@ -86,7 +87,7 @@ class Maze:
             size = self.__width_rec // 2
         text = general.get_font(size).render(txt, True, "Black")
         self.__screen.blit(text,
-                           (x * self.__width_rec + size // 7, y*self.__width_rec + size // 2))
+                           (x * self.__width_rec + size // 7, y * self.__width_rec + size // 2))
 
     def update_cell(self, pos, _type):
         # print(self.__data[pos[0]][pos[1]])
@@ -133,7 +134,6 @@ def record_change_output(dest, alg_name, num_of_input, heu=''):
 
 
 def main(level, alg_name, h=''):
-
     dirPath = "input/level_" + str(level)
     myMazeData = []
     filenames = general.get_files(dirPath)
@@ -167,22 +167,25 @@ def main(level, alg_name, h=''):
         start_time = timer()
 
         if h == '4':
-            cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h, params
-                                                )
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h,
+                                                           params
+                                                           )
         elif h == '1':
             # print('params[0]: ', [params[0]])
-            cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, [params[0]]
-                                                )
-            print(route)
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze,
+                                                           [params[0]]
+                                                           )
+            # print(route)
 
         else:
-            cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, params
-                                                )
-        # print(end_pos)
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, params
+                                                           )
+        cost, route = _tuple
         type_trace = Cell.PATH
         if cost == general.G_MAX:
             type_trace = Cell.NOPATH
         end_time = timer()
+        total_cell = general.count_cell(d)
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1
         # print(count, end_time - start_time)
@@ -191,6 +194,8 @@ def main(level, alg_name, h=''):
 
         if h != '':
             alg_name1 += 'heuristic_' + str(h)
+        write_result.write_to_file(outDirPath + str(count - 1) + '/result.csv', [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),  end_time - start_time])
+
         pygame.image.save(screen, path1 + '/' + alg_name + '/' + alg_name1 + '.png')
 
         for i in range(50):

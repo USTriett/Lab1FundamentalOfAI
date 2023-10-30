@@ -166,14 +166,11 @@ def get_files(dirPath):
 
 def write_output_txt(filename, matrix, time, cost, route):
     with open(filename, 'w') as f:
-        for i in matrix:
-            for j in i:
-                f.write(j)
-            f.write('\n')
         # write time
-        if len(route) == 0:
+        if cost == G_MAX:
             f.write("No" + '\n')
-        f.write(str(time) + '\n')
+        else:
+            f.write(str(cost) + '\n')
 
         # f.write(str(cost) + '\n')
         #
@@ -187,3 +184,13 @@ def write_output_txt(filename, matrix, time, cost, route):
 def get_font(size=36):
     pygame.font.init()
     return pygame.font.Font(None, size)
+
+
+def count_cell(matrix):
+    _count = 0
+    for i in matrix:
+        for j in i:
+            if j != 'x':
+                _count += 1
+
+    return _count

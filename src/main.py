@@ -12,7 +12,7 @@ if __name__ == '__main__':
     for alg in algs:
         if alg != algs[-1] and alg != algs[-2]:
             Maze.main(1, alg)
-            # print("pass")
+
         else:
             for h in heu:
                 # print(alg, h)
@@ -20,5 +20,5 @@ if __name__ == '__main__':
 
     for i in range(2, 4):
         Maze.main(i, general.ALGORITHM_NAME.BONUS)
-    for h in heu:
-        Maze.advanced_main(alg_name=general.ALGORITHM_NAME.TELE, h=h)
+    # for h in heu:
+    #     Maze.advanced_main(alg_name=general.ALGORITHM_NAME.TELE, h=h)

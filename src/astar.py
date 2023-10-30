@@ -9,11 +9,11 @@ MAX = G_MAX
 def astar(matrix, start, end, costMatrix, maze, *args):
     numRows = len(matrix)
     numCols = len(matrix[0])
-
+    cell_open = 0
     queue = []
     # queue.append([0,start[0],start[1]])
     heapq.heappush(queue, [0, start[0], start[1]])
-
+    cell_open += 1
     isClosed = [[False] * numCols for _ in range(numRows)]
 
     cost = [[MAX] * numCols for _ in range(numRows)]
@@ -43,10 +43,11 @@ def astar(matrix, start, end, costMatrix, maze, *args):
 
                 # queue.append((h,x,y))
                 heapq.heappush(queue, (f, x, y))
+                cell_open += 1
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
 
                 if [x, y] == end:
                     # print('end')
-                    return trace(matrix, cost, costMatrix, start, end)
+                    return cell_open, trace(matrix, cost, costMatrix, start, end)
 
-    return MAX, []
+    return cell_open, (MAX, [])

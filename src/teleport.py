@@ -80,9 +80,11 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
     numCols = len(matrix[0])
     teleports = args[0][1]
     cntMatrix = [[0] * numCols for _ in range(numRows)]
-
+    cell_open = 0
     queue = []
     heapq.heappush(queue, (0, start[0], start[1]))
+    cell_open += 1
+
     cntMatrix[start[0]][start[1]] += 1
 
     isClosed = [[False] * numCols for _ in range(numRows)]
@@ -109,11 +111,13 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
                 f = cost[vx][vy] + h([x, y], end, args[0])
 
                 heapq.heappush(queue, (f, x, y))
+                cell_open += 1
+
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
                 cntMatrix[x][y] += 1
                 # print(f,x,y)
                 if (x, y) == end:
-                    return traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end)
+                    return cell_open, traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end)
 
         teleportTo = findToTeleports(vx, vy, teleports)
         # print(teleportTo)
@@ -122,14 +126,15 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
                 cost[x][y] = cost[vx][vy]
                 f = cost[vx][vy] + h([x, y], end, args[0])
                 heapq.heappush(queue, (f, x, y))
+                cell_open += 1
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
 
                 cntMatrix[x][y] += 1
                 # print(f,x,y)
                 if (x, y) == end:
-                    return traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end)
+                    return cell_open, traceTeleports(cntMatrix, teleports, matrix, cost, costMatrix, start, end)
 
-    return cntMatrix, G_MAX, []
+    return cell_open, (cntMatrix, G_MAX, [])
 
 # def main():
 #     teleports, matrix = read_file_teleport(filename="teleport.txt")
