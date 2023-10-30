@@ -1,7 +1,7 @@
 with open('input/leveL_2/maze_destination1.txt', 'w') as outfile:
     outfile.write("2\n")
-    outfile.write('1 1 -5')
-    outfile.write('1 8 -100')
+    outfile.write('1 1 -5\n')
+    outfile.write('1 8 -100\n')
     outfile.write('xxxxxxxxxx\n')
     outfile.write('x+x   x +x\n')
     outfile.write('x x x x  x\n')
