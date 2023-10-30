@@ -7,7 +7,7 @@ def h1(arg):
     cur = arg[0]
     end = arg[1]
     # print(end)
-    matrix = arg[2]
+    # matrix = arg[2]
     # print(matrix)
     # Mahatan
     dx = abs(end[0] - cur[0])
@@ -57,10 +57,11 @@ def h2(args):
 
     # so vat can
     c = calcInRect(prefixSum, left, right, top, bottom)
-    a = abs
+    a = (abs(left - right) + 1) * (abs(bottom - top) + 1)
     # print(left, right, top, bottom, c)
     # Mahatan + so vat can trong HCN (cur, end)
-    return h1((cur, end, matrix))
+    h_1 = h1((cur, end, matrix))
+    return h_1 + c/a * h_1
 
 
 # Heuristic 3: Heuristic 1 + tinh so vat can trong tam giac vuong can \
@@ -140,11 +141,12 @@ def h4(args):
     matrix = args[2]
 
     # print(cur)
-    scaleM = scaleManhattan(cur, end, len(matrix), len(matrix[0]))
+
     scaleSur = scaleSurround(cur, matrix)
 
     # print(scaleM, scaleSur, scaleM + scaleSur)
-    return scaleM + scaleSur
+    h_1 = h1((cur, end))
+    return h_1 + scaleSur*h_1
 
 
 def h(start, end, *args):

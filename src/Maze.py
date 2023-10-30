@@ -236,25 +236,25 @@ def advanced_main(alg_name, h=''):
         pygame.display.flip()
         params = [maze.get_score_data(), heuristic.calcPrefixSum(d)]
         start_time = timer()
-        cntMatrix, cost, route = (None, None, None)
+
         if h == '4':
-            cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (d,
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (d,
                                                                                                                  teleportData[
                                                                                                                      count],
                                                                                                                  h),
                                                            )
         elif h == '1':
-            cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze,
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze,
                                                            ([params[0]],
                                                             teleportData[
                                                                 count]),
                                                            )
         else:
-            cntMatrix, cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (params,
+            cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (params,
                                                                                                                  teleportData[
                                                                                                                      count])
                                                            )
-
+        cntMatrix, cost, route = _tuple
         type_trace = Cell.PATH
         if cost == general.G_MAX:
             type_trace = Cell.NOPATH
@@ -266,6 +266,11 @@ def advanced_main(alg_name, h=''):
         alg_name1 = alg_name
         if h != '':
             alg_name1 = alg_name + 'heuristic_' + str(h)
+
+        total_cell = general.count_cell(d)
+        write_result.write_to_file(outDirPath + str(count) + '/result.csv',
+                                   [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),
+                                    end_time - start_time])
         pygame.image.save(screen, path1 + '/' + alg_name + alg_name1 + '.png')
 
         for i in range(50):

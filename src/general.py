@@ -168,7 +168,7 @@ def write_output_txt(filename, matrix, time, cost, route):
     with open(filename, 'w') as f:
         # write time
         if cost == G_MAX:
-            f.write("No" + '\n')
+            f.write("NO" + '\n')
         else:
             f.write(str(cost) + '\n')
 
