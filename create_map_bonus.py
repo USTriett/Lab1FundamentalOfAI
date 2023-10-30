@@ -10,7 +10,7 @@ with open('input/leveL_2/maze_destination1.txt', 'w') as outfile:
     outfile.write('    x    x\n')
     outfile.write('xxxxxxxxxx\n')
 
-with open('input/leveL_2/maze_destination2.txt', 'w') as outfile:
+with open('../leveL_2/maze_destination2.txt', 'w') as outfile:
     outfile.write('5\n')
     outfile.write('1 28 -5\n')
     outfile.write('3 3 -50\n')

@@ -75,14 +75,16 @@ class Maze:
         pg.draw.rect(self.__screen, self.color_map[rect_type],
                      (row * self.__width_rec, col * self.__width_rec, self.__width_rec, self.__width_rec))
         if self.__data[col][row] == Cell.SCORE:
-            self.__write_text__(row, col, '+', self.__width_rec)
+            self.__write_text__(row, col, '+', (self.__width_rec + 5) // 2)
         if self.__data[col][row] == Cell.GOAL:
             self.__write_text__(row, col, 'EXIT', self.__width_rec // 2)
+        if self.__data[col][row] == Cell.START:
+            self.__write_text__(row, col, 'S', self.__width_rec // 2)
 
     def __write_text__(self, x, y, txt, size):
         text = general.get_font(size).render(txt, True, "Black")
         self.__screen.blit(text,
-                           (x * self.__width_rec + size // 7, y*self.__width_rec))
+                           (x * self.__width_rec + size // 7, y*self.__width_rec + size // 2))
 
     def update_cell(self, pos, _type):
         # print(self.__data[pos[0]][pos[1]])

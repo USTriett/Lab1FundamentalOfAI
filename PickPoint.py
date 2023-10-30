@@ -1,6 +1,6 @@
 from general import *
 
-
+#chay level 3 thoi
 def calcDistance(matrix, start, costMatrix):
     numRows = len(matrix)
     numCols = len(matrix[0])

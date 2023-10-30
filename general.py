@@ -127,7 +127,7 @@ import greedy
 import ucs
 import teleport
 import PickPoint
-import bonusSearch
+import BonusPoint
 
 
 class ALGORITHM_NAME(str, Enum):
@@ -158,7 +158,7 @@ def get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, *args):
     elif alg_name == ALGORITHM_NAME.PICKUP:
         return PickPoint.pickpointSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
     elif alg_name == ALGORITHM_NAME.BONUS:
-        return bonusSearch.bonusSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
+        return BonusPoint.bonuspointSearch(d, start_pos, end_pos, costMatrix, myMaze, *args)
     return None
 
 
