@@ -8,8 +8,6 @@ adjY = [0, 1, 0, -1]
 import os
 from enum import Enum
 
-from pip._internal.utils.misc import enum
-
 
 def read_file(file_name: str = 'input1.txt'):
     # mo file
@@ -120,14 +118,10 @@ def trace(matrix, cost, costMatrix, start, end):
     return cost[end[0]][end[1]], route
 
 
-import astar
-import bfs
-import dfs
-import greedy
-import ucs
 import teleport
 import PickPoint
 import BonusPoint
+from src import bfs, dfs, ucs, astar, greedy
 
 
 class ALGORITHM_NAME(str, Enum):
@@ -190,6 +184,6 @@ def write_output_txt(filename, matrix, time, cost, route):
         #         f.write(str(tuple(t)))
 
 
-def get_font(size = 36):
+def get_font(size=36):
     pygame.font.init()
     return pygame.font.Font(None, size)

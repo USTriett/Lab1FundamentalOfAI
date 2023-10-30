@@ -1,5 +1,3 @@
-import pygame.time
-
 import Maze
 from general import *
 

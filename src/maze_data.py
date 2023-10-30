@@ -1,4 +1,4 @@
-import general
+from src import general
 
 
 class MazeData:
@@ -43,5 +43,6 @@ def read_data(file_name):
             data[i][j] = 'G'
             # print(i, j)
             goal_pos = [i, j]
+
     file.close()
     return MazeData(num_score, score_data, data, goal_pos)

@@ -20,14 +20,14 @@ def read_file_teleport(filename):
         x1, y1, x2, y2 = map(int, next(f)[:-1].split(' '))
         teleports.append((x1, y1, x2, y2))
 
-    # doc me cung
     text = f.read()
     matrix = [list(i) for i in text.splitlines()]
     f.close()
     goal_pos = find_end(matrix)
+    # print('end ', goal_pos)
     # tra ve: danh sach teleports & me cung
     md = MazeData(0, [], matrix, goal_pos)
-    return teleports,md
+    return teleports, md
 
 
 # find tele dest

@@ -1,11 +1,7 @@
-import os
-
 import Maze
-import general
-import pygame as pg
+from src import general
 
 if __name__ == '__main__':
-
     level = 3
     algs = [general.ALGORITHM_NAME.BFS, general.ALGORITHM_NAME.DFS, general.ALGORITHM_NAME.UCS,
             general.ALGORITHM_NAME.GREEDY, general.ALGORITHM_NAME.ASTAR]
@@ -24,6 +20,5 @@ if __name__ == '__main__':
 
     for i in range(2, 4):
         Maze.main(i, general.ALGORITHM_NAME.BONUS)
-
     for h in heu:
         Maze.advanced_main(alg_name=general.ALGORITHM_NAME.TELE, h=h)

@@ -1,5 +1,4 @@
 import Maze
-import heuristic
 from general import *
 from heuristic import *
 import heapq

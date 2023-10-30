@@ -7,10 +7,8 @@ import pygame as pg
 
 import pygame.event
 
-import general
-import heuristic
+from src import heuristic, general, teleport
 import maze_data as md
-import teleport
 from pygame_recorder import ScreenRecorder
 
 # print(1)
@@ -52,9 +50,10 @@ class Maze:
         self.__screen = pg.Surface(size_screen)
         self.__screen.fill("White")
         self.__data = data.copy()
-        print(data)
+        # print('end pos', general.find_end(data))
+        # print(data)
         shape = data.shape
-        print(shape)
+        # print(shape)
         self.__width_rec = self.__screen.get_width() // shape[1]
         height_rec = self.__screen.get_height() // shape[0]
         self.__width_rec = min(self.__width_rec, height_rec)
@@ -76,12 +75,15 @@ class Maze:
                      (row * self.__width_rec, col * self.__width_rec, self.__width_rec, self.__width_rec))
         if self.__data[col][row] == Cell.SCORE:
             self.__write_text__(row, col, '+', (self.__width_rec + 5) // 2)
-        if self.__data[col][row] == Cell.GOAL:
+        elif self.__data[col][row] == Cell.GOAL or (col, row) == general.find_end(self.__data):
             self.__write_text__(row, col, 'EXIT', self.__width_rec // 2)
-        if self.__data[col][row] == Cell.START:
+        elif self.__data[col][row] == Cell.START:
             self.__write_text__(row, col, 'S', self.__width_rec // 2)
 
-    def __write_text__(self, x, y, txt, size):
+    def __write_text__(self, x, y, txt, size=0):
+        # print(txt)
+        if size == 0:
+            size = self.__width_rec // 2
         text = general.get_font(size).render(txt, True, "Black")
         self.__screen.blit(text,
                            (x * self.__width_rec + size // 7, y*self.__width_rec + size // 2))
@@ -132,14 +134,14 @@ def record_change_output(dest, alg_name, num_of_input, heu=''):
 
 def main(level, alg_name, h=''):
 
-    dirPath = "./input/level_" + str(level)
+    dirPath = "input/level_" + str(level)
     myMazeData = []
     filenames = general.get_files(dirPath)
     for f in filenames:
         myMazeData.append(md.read_data(os.path.join(dirPath, f)))
         # print(f)
     count = 1
-    outDirPath = './output/level' + str(level) + '/input'
+    outDirPath = 'output/level' + str(level) + '/input'
     for maze in myMazeData:
         path = record_change_output(outDirPath, alg_name, count, h)
         d = np.array(maze.get_data())
@@ -198,7 +200,7 @@ def main(level, alg_name, h=''):
 
 
 def advanced_main(alg_name, h=''):
-    dirPath = './input/advance'
+    dirPath = 'input/advance'
     advanced_file_list = general.get_files(dirPath)
     # print(len(advanced_file_list))
     myMazeData = []
@@ -209,7 +211,7 @@ def advanced_main(alg_name, h=''):
         teleportData.append(x)
         myMazeData.append(y)
     # print(teleportData[0])
-    outDirPath = './output/advance/advance'
+    outDirPath = 'output/advance/advance'
     count = 0
     for maze in myMazeData:
         path = record_change_output(outDirPath, alg_name, count + 1, h)
@@ -217,8 +219,7 @@ def advanced_main(alg_name, h=''):
         screen = pg.display.set_mode((1000, 500))
         screen.fill("White")
         myMaze = Maze((900, 450), d, screen)
-        myMaze.display()
-        pygame.display.flip()
+
         path1 = outDirPath + str(count + 1)
         pygame.image.save(screen, outDirPath + str(count + 1) + '.png')
         costMatrix = general.creatCostMatrix(d, [])
@@ -226,6 +227,8 @@ def advanced_main(alg_name, h=''):
         start_pos = general.find_start(d)
         end_pos = maze.get_goal_pos()
 
+        myMaze.display()
+        pygame.display.flip()
         params = [maze.get_score_data(), heuristic.calcPrefixSum(d)]
         start_time = timer()
         cntMatrix, cost, route = (None, None, None)
