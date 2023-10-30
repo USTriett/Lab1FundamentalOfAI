@@ -138,11 +138,11 @@ def h4(args):
     end = args[1]
     matrix = args[2]
 
-    print(cur)
+    # print(cur)
     scaleM = scaleManhattan(cur, end, len(matrix), len(matrix[0]))
     scaleSur = scaleSurround(cur, matrix)
 
-    print(scaleM, scaleSur, scaleM + scaleSur)
+    # print(scaleM, scaleSur, scaleM + scaleSur)
     return scaleM + scaleSur
 
 

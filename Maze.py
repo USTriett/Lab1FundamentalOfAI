@@ -29,7 +29,7 @@ class Cell(str, Enum):
     TELE = "T"
     CLOSED_GATE = 'CG'
     SCORE = '+'
-
+    NOPATH = 'no'
 
 class Maze:
     __screen = pg.Surface((600, 300))
@@ -40,12 +40,13 @@ class Maze:
 
     def __init__(self, size_screen, data, main_screen):
 
-        self.color_map = {Cell.EMPTY: "White", Cell.PATH: "Yellow", Cell.GOAL: "Red", Cell.BLOCKED: "Black",
+        self.color_map = {Cell.EMPTY: "White", Cell.PATH: "Yellow", Cell.GOAL: "Blue", Cell.BLOCKED: "Black",
                           Cell.START: "Green",
                           Cell.FRONTIER: "Purple",
                           Cell.TELE: "Orange",
                           Cell.CLOSED_GATE: "Gray",
-                          Cell.SCORE: "White"
+                          Cell.SCORE: "White",
+                          Cell.NOPATH:"RED"
                           }
         self.__main_screen = main_screen
         self.__screen = pg.Surface(size_screen)
@@ -90,9 +91,9 @@ class Maze:
         self.display()
         # pygame.time.wait(50)
 
-    def trace_back(self, pos):
+    def trace_back(self, pos, type_trace):
         for [i, j] in pos:
-            self.update_cell([j, i], Cell.PATH)
+            self.update_cell([j, i], type_trace)
             self.display()
             # pygame.time.wait(50)
 
@@ -145,7 +146,8 @@ def main(level, alg_name, h=''):
         myMaze = Maze((900, 450), d, screen)
         myMaze.display()
         pygame.display.flip()
-        pygame.image.save(screen, outDirPath  + str(count) + '.png')
+        path1 = outDirPath + str(count)
+        pygame.image.save(screen, path1 + '.png')
 
         costMatrix = general.creatCostMatrix(d, [])
         start_pos = general.find_start(d)
@@ -159,26 +161,34 @@ def main(level, alg_name, h=''):
         # print(params)
 
         start_time = timer()
-        cost, route = (None, None)
 
         if h == '4':
             cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h, params
                                                 )
         elif h == '1':
-            print('params[0]: ', [params[0]])
+            # print('params[0]: ', [params[0]])
             cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, [params[0]]
                                                 )
+            print(route)
 
         else:
             cost, route = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, params
                                                 )
         # print(end_pos)
-
+        type_trace = Cell.PATH
+        if cost == general.G_MAX:
+            type_trace = Cell.NOPATH
         end_time = timer()
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1
         # print(count, end_time - start_time)
-        myMaze.trace_back(route)
+        myMaze.trace_back(route, type_trace)
+        alg_name1 = alg_name
+
+        if h != '':
+            alg_name1 += 'heuristic_' + str(h)
+        pygame.image.save(screen, path1 + '/' + alg_name + '/' + alg_name1 + '.png')
+
         for i in range(50):
             recorder.capture_frame(screen)
         pg.quit()
@@ -207,7 +217,8 @@ def advanced_main(alg_name, h=''):
         myMaze = Maze((900, 450), d, screen)
         myMaze.display()
         pygame.display.flip()
-        pygame.image.save(screen, outDirPath + str(count) + '.png')
+        path1 = outDirPath + str(count + 1)
+        pygame.image.save(screen, outDirPath + str(count + 1) + '.png')
         costMatrix = general.creatCostMatrix(d, [])
         # print(costMatrix)
         start_pos = general.find_start(d)
@@ -233,11 +244,20 @@ def advanced_main(alg_name, h=''):
                                                                                                                  teleportData[
                                                                                                                      count])
                                                            )
+
+        type_trace = Cell.PATH
+        if cost == general.G_MAX:
+            type_trace = Cell.NOPATH
         end_time = timer()
         general.write_output_txt(path + '.txt', [], end_time - start_time, cost, route)
         count += 1
         # print(count, end_time - start_time)
-        myMaze.trace_back(route)
+        myMaze.trace_back(route, type_trace)
+        alg_name1 = alg_name
+        if h != '':
+            alg_name1 = alg_name + 'heuristic_' + str(h)
+        pygame.image.save(screen, path1 + '/' + alg_name + alg_name1 + '.png')
+
         for i in range(50):
             recorder.capture_frame(screen)
         pg.quit()

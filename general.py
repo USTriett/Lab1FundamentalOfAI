@@ -46,7 +46,7 @@ def find_start(matrix):
 def find_end(matrix):
     numRows = len(matrix)
     numCols = len(matrix[0])
-
+    print(numRows, numCols)
     for i in range(numRows):
         if matrix[i][0] != 'x':
             return i, 0
@@ -177,15 +177,17 @@ def write_output_txt(filename, matrix, time, cost, route):
                 f.write(j)
             f.write('\n')
         # write time
+        if len(route) == 0:
+            f.write("No" + '\n')
         f.write(str(time) + '\n')
 
-        f.write(str(cost) + '\n')
-
-        for t in route:
-            if t != route[-1]:
-                f.write(str(t) + ', ')
-            else:
-                f.write(str(tuple(t)))
+        # f.write(str(cost) + '\n')
+        #
+        # for t in route:
+        #     if t != route[-1]:
+        #         f.write(str(t) + ', ')
+        #     else:
+        #         f.write(str(tuple(t)))
 
 
 def get_font(size = 36):

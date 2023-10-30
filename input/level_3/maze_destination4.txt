@@ -14,10 +14,10 @@
 11 6 0
 11 11 0
 xxxxxxxxxxxxxxxx
-xG +         + x
+xS +         + x
 x         +    x
 x     + xx   + x
-x  xxxxx +  x x
+x  xxxxx +   x x
 x    x+  x xx+xx
 x    x x       x
 x   +  x+      x

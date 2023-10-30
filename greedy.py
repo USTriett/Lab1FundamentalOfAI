@@ -40,7 +40,8 @@ def greedy(matrix, start, end, costMatrix, maze, *args):
         isVisited[xx][yy] = True
         maze.update_cell([yy, xx], Maze.Cell.FRONTIER)
         # print(cost, " -> ", route)
-    print(route)
+    # print(route)
     if list(route[-1]) == end:
         return cost, route
-    return MAX, []
+    # print(route)
+    return MAX, route
