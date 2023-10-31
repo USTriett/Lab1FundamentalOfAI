@@ -25,4 +25,4 @@ def findDestination(file_path):
     print(f"An error occurred: {str(e)}")
 
 # findDestination("input/level_3/maze_destination2.txt")
-findDestination("input/level_3/maze_destination3.txt")
+findDestination("input/level_3/maze_destination4.txt")

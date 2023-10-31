@@ -4,17 +4,17 @@
 6 1 5 19
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x S                                x
-x  xxxxxxxxxxxxxxxxxxxxxxxx        x
-x  x                     Tx        x
-x  x xxxxxxxxxxxxxxxxxxxxxx        x
+x  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  x
+x  x                     T      x  x
+x  x xxxxxxxxxxxxxxxxxxxxxxxxxxxx  x
 x  x               T               x
-xT xxxxxxxxxxxxxxxxxxxxxxxx       xx
+xT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx
 x  x   x                         x T
 x  x x x x                        xx
 x  x x x x                         x
 x  x x   x             T           x
 x  x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 x  xT                              x
-x  xxxxxxxxxxxxxxxxxxxxxxxx        x
+x  xxxxx xxxxxxxxxxxxxxxxxx        x
 x                                  x
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
