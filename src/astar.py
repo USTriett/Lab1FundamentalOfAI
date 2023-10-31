@@ -1,6 +1,6 @@
 import Maze
 from general import *
-from heuristic import *
+import heuristic
 import heapq
 
 MAX = G_MAX
@@ -39,7 +39,7 @@ def astar(matrix, start, end, costMatrix, maze, *args):
 
                 cost[x][y] = tmpCost
                 # print(args)
-                f = cost[vx][vy] + h([x, y], end, args)
+                f = cost[vx][vy] + heuristic.h([x, y], end, args)
 
                 # queue.append((h,x,y))
                 heapq.heappush(queue, (f, x, y))

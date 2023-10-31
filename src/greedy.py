@@ -1,7 +1,7 @@
 import Maze
 
 from general import *
-from heuristic import *
+import heuristic
 
 MAX = G_MAX
 
@@ -29,7 +29,7 @@ def greedy(matrix, start, end, costMatrix, maze, *args):
             x = v[0] + adjX[i]
             y = v[1] + adjY[i]
             if check(matrix, x, y) is True and isVisited[x][y] is False:
-                f = h([x, y], end, args)
+                f = heuristic.h([x, y], end, args)
                 if f < minn:
                     minn = f
                     xx = x

@@ -1,6 +1,6 @@
 import Maze
 from general import *
-from heuristic import *
+import heuristic
 import heapq
 
 from maze_data import MazeData
@@ -108,7 +108,7 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
 
             if check(matrix, x, y) is True and isClosed[x][y] is False:
                 cost[x][y] = tmpCost
-                f = cost[vx][vy] + h([x, y], end, args[0])
+                f = cost[vx][vy] + heuristic.h([x, y], end, args[0])
 
                 heapq.heappush(queue, (f, x, y))
                 cell_open += 1
@@ -124,7 +124,7 @@ def teleportSearch(matrix, start, end, costMatrix, maze, *args):
         for x, y in teleportTo:
             if isClosed[x][y] is False:
                 cost[x][y] = cost[vx][vy]
-                f = cost[vx][vy] + h([x, y], end, args[0])
+                f = cost[vx][vy] + heuristic.h([x, y], end, args[0])
                 heapq.heappush(queue, (f, x, y))
                 cell_open += 1
                 maze.update_cell([y, x], Maze.Cell.FRONTIER)
