@@ -44,7 +44,6 @@ def find_start(matrix):
 def find_end(matrix):
     numRows = len(matrix)
     numCols = len(matrix[0])
-    print(numRows, numCols)
     for i in range(numRows):
         if matrix[i][0] != 'x':
             return i, 0
@@ -111,7 +110,6 @@ def trace(matrix, cost, costMatrix, start, end):
             if check(matrix, x, y) is True and cost[x][y] == cost[v[0]][v[1]] - costMatrix[v[0]][v[1]]:
                 route.append((x, y))
                 v = (x, y)
-                print(v)
                 break
     route.reverse()
 
@@ -121,7 +119,7 @@ def trace(matrix, cost, costMatrix, start, end):
 import teleport
 import PickPoint
 import BonusPoint
-from src import bfs, dfs, ucs, astar, greedy
+import bfs, dfs, ucs, astar, greedy
 
 
 class ALGORITHM_NAME(str, Enum):

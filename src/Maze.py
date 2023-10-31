@@ -7,7 +7,7 @@ import pygame as pg
 
 import pygame.event
 
-from src import heuristic, general, teleport, write_result
+import heuristic, general, teleport, write_result
 import maze_data as md
 from pygame_recorder import ScreenRecorder
 

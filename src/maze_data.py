@@ -1,4 +1,4 @@
-from src import general
+import general
 
 
 class MazeData:
