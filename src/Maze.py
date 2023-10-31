@@ -226,7 +226,6 @@ def advanced_main(alg_name, h=''):
         myMaze = Maze((900, 450), d, screen)
 
         path1 = outDirPath + str(count + 1)
-        pygame.image.save(screen, outDirPath + str(count + 1) + '.png')
         costMatrix = general.creatCostMatrix(d, [])
         # print(costMatrix)
         start_pos = general.find_start(d)
@@ -234,6 +233,8 @@ def advanced_main(alg_name, h=''):
 
         myMaze.display()
         pygame.display.flip()
+        pygame.image.save(screen, outDirPath + str(count + 1) + '.png')
+
         params = [maze.get_score_data(), heuristic.calcPrefixSum(d)]
         start_time = timer()
 
