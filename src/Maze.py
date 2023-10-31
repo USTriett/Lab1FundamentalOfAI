@@ -138,6 +138,8 @@ def main(level, alg_name, h=''):
     absolute_maze3 = dirPath + '/maze_destination5.txt'
     myMazeData = []
     filenames = general.get_files(dirPath)
+    filenames.sort()
+    print(filenames)
     for f in filenames:
         myMazeData.append(md.read_data(os.path.join(dirPath, f)))
         # print(f)
