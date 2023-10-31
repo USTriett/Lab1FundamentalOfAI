@@ -135,6 +135,7 @@ def record_change_output(dest, alg_name, num_of_input, heu=''):
 
 def main(level, alg_name, h=''):
     dirPath = "input/level_" + str(level)
+    absolute_maze3 = dirPath + '/maze_destination5.txt'
     myMazeData = []
     filenames = general.get_files(dirPath)
     for f in filenames:
@@ -152,7 +153,8 @@ def main(level, alg_name, h=''):
         pygame.display.flip()
         path1 = outDirPath + str(count)
         pygame.image.save(screen, path1 + '.png')
-
+        if level == 3 and count == 5:
+            continue
         costMatrix = general.creatCostMatrix(d, [])
         start_pos = general.find_start(d)
         end_pos = maze.get_goal_pos()
@@ -168,18 +170,18 @@ def main(level, alg_name, h=''):
 
         if h == '4':
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, d, h,
-                                                           params
-                                                           )
+                                                      params
+                                                      )
         elif h == '1':
             # print('params[0]: ', [params[0]])
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze,
-                                                           [params[0]]
-                                                           )
+                                                      [params[0]]
+                                                      )
             # print(route)
 
         else:
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, params
-                                                           )
+                                                      )
         cost, route = _tuple
         type_trace = Cell.PATH
         if cost == general.G_MAX:
@@ -194,7 +196,9 @@ def main(level, alg_name, h=''):
 
         if h != '':
             alg_name1 += 'heuristic_' + str(h)
-        write_result.write_to_file(outDirPath + str(count - 1) + '/result.csv', [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),  end_time - start_time])
+        # write_result.write_to_file(outDirPath + str(count - 1) + '/result.csv',
+        #                            [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),
+        #                             end_time - start_time])
 
         pygame.image.save(screen, path1 + '/' + alg_name + '/' + alg_name1 + '.png')
 
@@ -240,21 +244,21 @@ def advanced_main(alg_name, h=''):
 
         if h == '4':
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (d,
-                                                                                                                 teleportData[
-                                                                                                                     count],
-                                                                                                                 h),
-                                                           )
+                                                                                                            teleportData[
+                                                                                                                count],
+                                                                                                            h),
+                                                      )
         elif h == '1':
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze,
-                                                           ([params[0]],
-                                                            teleportData[
-                                                                count]),
-                                                           )
+                                                      ([params[0]],
+                                                       teleportData[
+                                                           count]),
+                                                      )
         else:
             cell_open, _tuple = general.get_func_dict(alg_name, d, start_pos, end_pos, costMatrix, myMaze, (params,
-                                                                                                                 teleportData[
-                                                                                                                     count])
-                                                           )
+                                                                                                            teleportData[
+                                                                                                                count])
+                                                      )
         cntMatrix, cost, route = _tuple
         type_trace = Cell.PATH
         if cost == general.G_MAX:
@@ -269,9 +273,9 @@ def advanced_main(alg_name, h=''):
             alg_name1 = alg_name + 'heuristic_' + str(h)
 
         total_cell = general.count_cell(d)
-        write_result.write_to_file(outDirPath + str(count) + '/result.csv',
-                                   [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),
-                                    end_time - start_time])
+        # write_result.write_to_file(outDirPath + str(count) + '/result.csv',
+        #                            [alg_name1, len(route), cost, cell_open, 100 * (cell_open / total_cell),
+        #                             end_time - start_time])
         pygame.image.save(screen, path1 + '/' + alg_name + alg_name1 + '.png')
 
         for i in range(50):
