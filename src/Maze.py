@@ -154,6 +154,7 @@ def main(level, alg_name, h=''):
         path1 = outDirPath + str(count)
         pygame.image.save(screen, path1 + '.png')
         if level == 3 and count == 5:
+            count += 1
             continue
         costMatrix = general.creatCostMatrix(d, [])
         start_pos = general.find_start(d)
